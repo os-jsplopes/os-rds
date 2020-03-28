@@ -27,11 +27,8 @@ jobs:
               run: npm run build
             - name: Test package
               run: npm test
-            - name: Analise package using SonarCloud scan
+            - name: Analyze package using SonarCloud scan
               uses: sonarsource/sonarcloud-github-action@master
-              env:
-                  GITHUB_TOKEN: $GITHUB_TOKEN
-                  SONAR_TOKEN: $SONAR_TOKEN
             - name: Sync Branch
               run: |
                   git add .
