@@ -12,11 +12,9 @@ jobs:
         steps:
             - name: Checkout master branch
               uses: actions/checkout@v2
-            - name: Set User
+            - name: Update Package Version
               run: |
                   git config --global user.name 'os-jsplopes'
                   git config --global user.email 'julio.lopes@outsystems.com'
-            - name: Version
-              run: npm version patch
-            - name: Push
-              run: git push --tags origin HEAD:master
+                  npm version patch
+                  git push --tags origin HEAD:master
