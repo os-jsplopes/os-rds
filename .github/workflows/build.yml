@@ -12,6 +12,9 @@ jobs:
         steps:
             - name: Checkout master branch
               uses: actions/checkout@v2
-            run: npm version patch
-            run: git commit -m "update version"
-            run: git push
+            - name: Version
+              run: npm version patch
+            - name: Commit
+              run: git commit -m "update version"
+            - name: Push
+              run: git push
