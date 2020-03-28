@@ -12,24 +12,6 @@ jobs:
         steps:
             - name: Checkout master branch
               uses: actions/checkout@v2
-            - name: Set up enviroment
-              uses: actions/setup-node@v1
-              with:
-                  node-version: "12.x"
-                  registry-url: "https://npm.pkg.github.com"
-                  scope: "@os-jsplopes"
-            - name: Install dependencies
-              run: npm install
-            - name: Run build
-              run: npm run build:dev
-            - name: Publish Github Package
-              run: |
-                  git config --global user.name 'os-jsplopes'
-                  git config --global user.email 'julio.lopes@outsystems.com'
-                  echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrcv
-                  npm version patch
-                  git add . && git commit
-                  git push --tags && git push
-                  npm publish --tag master
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            run: npm version patch
+            run: git commit -m "update version"
+            run: git push
