@@ -31,12 +31,10 @@ jobs:
                   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
             - name: Update package version to prerelase
               run: |
-                  git config --global user.name 'os-jsplopes'
-                  git config --global user.email 'julio.lopes@outsystems.com'
                   npm run gitlogin
                   npm run np:patch
               env:
-                  GITHUB_PACKAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Publish package to Github
               run: npm publish --tag work

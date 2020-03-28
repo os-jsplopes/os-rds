@@ -16,7 +16,7 @@
         "docz:serve": "docz build && docz serve",
         "generate-declaration": "dts-bundle-generator -o ./dist/index.d.ts ./src/index.ts",
         "test": "jest",
-        "gitlogin": "npm-cli-login -u jsplopes -p ${GITHUB_PACKAGES_TOKEN} -e jsplopes@gmail.com -r https://npm.pkg.github.com",
+        "gitlogin": "npm-cli-login -p ${GITHUB_TOKEN} -r https://npm.pkg.github.com",
         "np:major": "np major --no-publish --yolo --no-release-draft --any-branch",
         "np:minor": "np minor --no-publish --yolo --no-release-draft --any-branch",
         "np:patch": "np patch --no-publish --yolo --no-release-draft --any-branch",
