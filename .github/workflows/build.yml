@@ -12,6 +12,10 @@ jobs:
         steps:
             - name: Checkout master branch
               uses: actions/checkout@v2
+            - name: Setup node
+              uses: actions/setup-node@v1
+              with:
+                  node-version: "12.x"
             - name: Install package dependencies
               run: npm install
             - name: Build package
@@ -20,7 +24,8 @@ jobs:
               run: |
                   git config --global user.name 'os-jsplopes'
                   git config --global user.email 'julio.lopes@outsystems.com'
-                  git add . && git commit
+                  git add .
+                  git commit -m "update version"
                   npm version patch
                   git push --tags origin HEAD:master
             - name: Publish package to github
