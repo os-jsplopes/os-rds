@@ -28,7 +28,7 @@ jobs:
             - name: Test package
               run: npm test
             - name: Analyze package using SonarCloud scan
-              uses: sonarsource/sonarcloud-github-action@work
+              uses: sonarsource/sonarcloud-github-action@master
             - name: Sync Branch
               run: |
                   git add .
