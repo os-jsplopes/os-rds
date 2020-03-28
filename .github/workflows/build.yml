@@ -16,11 +16,11 @@ jobs:
               run: npm install
             - name: Build package
               run: npm run build
-            - name: Update Package Version
+            - name: Update package version
               run: |
                   git config --global user.name 'os-jsplopes'
                   git config --global user.email 'julio.lopes@outsystems.com'
                   npm version patch
                   git push --tags origin HEAD:master
-            - name: Publish Package
+            - name: Publish package to github
               run: npm publish --tag master
