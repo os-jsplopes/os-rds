@@ -43,7 +43,7 @@ jobs:
                   npm version patch
                   git push --tags origin HEAD:work
             - name: Create .npmrc
-              run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
+              run: echo "@work:registry=https://npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
             - name: Publish package to github
               run: |
                   npm config set scope @work
