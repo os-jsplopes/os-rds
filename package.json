@@ -18,7 +18,7 @@
         "test": "jest",
         "version:patch": "npm version patch",
         "push:git": "git push --tags origin HEAD:master",
-        "prepublishOnly": "npm run version:patch && npm run push:git"
+        "prepublishOnly2": "npm run version:patch && npm run push:git"
     },
     "author": "jsplopes",
     "license": "MIT",
