@@ -10,7 +10,7 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Checkout work branch
+            - name: Checkout master branch
               uses: actions/checkout@v2
             - name: Set up enviroment
               uses: actions/setup-node@v1
@@ -30,6 +30,9 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
             - name: Publish Github Package
-              run: npm publish --tag master
+              run: |
+                  git config --global user.name 'os-jsplopes'
+                  git config --global user.email 'julio.lopes@outsystems.com'
+                  npm publish --tag master
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
