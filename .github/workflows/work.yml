@@ -28,7 +28,7 @@ jobs:
             - name: Test package
               run: npm test
             - name: Analyze package using SonarCloud scan
-              uses: sonarsource/sonarcloud-github-action@master
+              uses: sonarsource/sonarcloud-github-action@work
             - name: Sync Branch
               run: |
                   git add .
@@ -41,7 +41,7 @@ jobs:
             - name: Update package version
               run: |
                   npm version patch
-                  git push --tags origin HEAD:master
+                  git push --tags origin HEAD:work
             - name: Create .npmrc
               run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
             - name: Publish package to github
