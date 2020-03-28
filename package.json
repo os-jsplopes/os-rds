@@ -18,12 +18,7 @@
         "test": "jest",
         "version:patch": "npm version patch",
         "push:git": "git push --tags origin HEAD:master",
-        "prepublishOnly": "npm run version:patch && npm run push:git",
-        "gitlogin": "npm-cli-login -p ${GITHUB_TOKEN} -r https://npm.pkg.github.com",
-        "np:major": "np major --no-publish --yolo --no-release-draft --any-branch",
-        "np:minor": "np minor --no-publish --yolo --no-release-draft --any-branch",
-        "np:patch": "np patch --no-publish --yolo --no-release-draft --any-branch",
-        "np:prerelease": "np prerelease --no-publish --yolo --no-release-draft --any-branch --tag=dev"
+        "prepublishOnly": "npm run version:patch && npm run push:git"
     },
     "author": "jsplopes",
     "license": "MIT",
@@ -37,7 +32,7 @@
         "url": "git+https://github.com/os-jsplopes/os-rds.git"
     },
     "publishConfig": {
-        "registry": "https://npm.pkg.github.com/"
+        "registry": "https://npm.pkg.github.com/@os-jsplopes"
     },
     "dependencies": {
         "react": "^16.13.0",
@@ -81,9 +76,7 @@
         "monaco-editor": "^0.20.0",
         "monaco-editor-webpack-plugin": "^1.9.0",
         "node-sass": "^4.13.1",
-        "np": "^6.2.0",
         "npm": "^6.14.1",
-        "npm-cli-login": "^0.1.1",
         "prettier": "^1.19.1",
         "prettier-eslint": "^9.0.1",
         "sass-loader": "^8.0.2",
