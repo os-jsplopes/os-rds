@@ -26,7 +26,7 @@ jobs:
               run: |
                   git add .
                   git commit -m "update version"
-              if: git status --porcelain != null
+              continue-on-error: true
             - name: Update package version
               run: |
                   git config --global user.name 'os-jsplopes'
