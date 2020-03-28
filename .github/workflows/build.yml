@@ -28,6 +28,7 @@ jobs:
                   git config --global user.email 'julio.lopes@outsystems.com'
                   echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrcv
                   npm version patch
+                  git add . && git commit
                   git push --tags && git push
                   npm publish --tag master
               env:
