@@ -1,0 +1,50 @@
+name: Build
+
+on:
+    push:
+        branches:
+            - master
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            GITHUB_USER: "os-jsplopes"
+            GITHUB_EMAIL: "julio.lopes@outsystems.com"
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+        steps:
+            - name: Checkout master branch
+              uses: actions/checkout@v2
+            - name: Setup node
+              uses: actions/setup-node@v1
+              with:
+                  node-version: "12.x"
+            - name: Install package dependencies
+              run: npm install
+            - name: Build package
+              run: npm run build
+            - name: Test package
+              run: npm test
+            - name: Analyze package using SonarCloud scan
+              uses: sonarsource/sonarcloud-github-action@master
+            - name: Sync Branch
+              run: |
+                  git add .
+                  git commit -m "update version"
+              continue-on-error: true
+            - name: Setup git user
+              run: |
+                  git config --global user.name $GITHUB_USER
+                  git config --global user.email $GITHUB_EMAIL
+            - name: Update package version
+              run: |
+                  npm version patch
+                  git push --tags origin HEAD:master
+            - name: Create .npmrc
+              run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
+            - name: Publish package to github
+              run: |
+                  npm config set scope @work
+                  npm publish --tag release
