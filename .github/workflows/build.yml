@@ -45,4 +45,4 @@ jobs:
             - name: Create .npmrc
               run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
             - name: Publish package to github
-              run: npm publish --tag master
+              run: npm publish --tag release
