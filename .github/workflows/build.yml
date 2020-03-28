@@ -8,6 +8,8 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
         steps:
             - name: Checkout master branch
@@ -20,17 +22,18 @@ jobs:
               run: npm install
             - name: Build package
               run: npm run build
+            - name: Sync Branch
+              run: |
+                  git add .
+                  git commit -m "update version"
+              if: git status --porcelain != null
             - name: Update package version
               run: |
                   git config --global user.name 'os-jsplopes'
                   git config --global user.email 'julio.lopes@outsystems.com'
-                  git add .
-                  git commit -m "update version"
                   npm version patch
                   git push --tags origin HEAD:master
             - name: Create .npmrc
               run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Publish package to github
               run: npm publish --tag master
