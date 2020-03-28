@@ -2,5 +2,6 @@ node_modules
 dist
 reports
 .docz
+.scannerwork
 package-lock.json
 test-report.xml
