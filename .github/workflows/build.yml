@@ -28,5 +28,9 @@ jobs:
                   git commit -m "update version"
                   npm version patch
                   git push --tags origin HEAD:master
+            - name: Create .npmrc
+              run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Publish package to github
               run: npm publish --tag master
