@@ -34,6 +34,8 @@ jobs:
             - name: Create .npmrc
               run: echo "@work:registry=https://npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
             - name: Dist TAG
-              run: npm dist-tag add os-rds@1.0.22 work
+              run: |
+                  npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}
+                  npm dist-tag add os-rds@1.0.22 work
             - name: Publish package to github
               run: npm publish --tag release
