@@ -27,10 +27,12 @@ jobs:
               run: npm install
             - name: Build package
               run: npm run build
-            - name: Test package
-              run: npm test
-            - name: Analyze package using SonarCloud scan
-              uses: sonarsource/sonarcloud-github-action@master
+            - name: Setup git user
+              run: |
+                  git config --global user.name $GITHUB_USER
+                  git config --global user.email $GITHUB_EMAIL
+            - name: npmrc
+              run: cat ~/.npmrc
             - name: Publish
               uses: shawnbot/npm-publish-action@master
               env:
