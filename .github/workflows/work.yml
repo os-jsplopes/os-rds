@@ -33,6 +33,8 @@ jobs:
                   git config --global user.email $GITHUB_EMAIL
             - name: Create .npmrc
               run: echo "@work:registry=https://npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
+            - name: Dist TAG
+              run: npm dist-tag add os-rds@1.0.22 work
             - name: Publish
               uses: shawnbot/npm-publish-action@master
               env:
