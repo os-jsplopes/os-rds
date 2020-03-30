@@ -21,30 +21,20 @@ jobs:
               uses: actions/setup-node@v1
               with:
                   node-version: "12.x"
+                  registry-url: "https://npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}"
+                  scope: "@work"
             - name: Install package dependencies
               run: npm install
             - name: Build package
               run: npm run build
-            - name: Test package
-              run: npm test
-            - name: Analyze package using SonarCloud scan
-              uses: sonarsource/sonarcloud-github-action@master
-            - name: Sync Branch
-              run: |
-                  git add .
-                  git commit -m "update version"
-              continue-on-error: true
             - name: Setup git user
               run: |
                   git config --global user.name $GITHUB_USER
                   git config --global user.email $GITHUB_EMAIL
-            - name: Update package version
-              run: |
-                  npm version patch
-                  git push --tags origin HEAD:master
             - name: Create .npmrc
-              run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
-            - name: Publish package to github
-              run: |
-                  npm config set scope @work
-                  npm publish --tag release
+              run: echo "@work:registry=https://npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
+            - name: Publish
+              uses: shawnbot/npm-publish-action@master
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
