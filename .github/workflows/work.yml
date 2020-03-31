@@ -44,7 +44,7 @@ jobs:
           git config --global user.name $GITHUB_USER
           git config --global user.email $GITHUB_EMAIL
       - name: Create .npmrc
-        run: echo "@work:registry=https://npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
       - name: Dist TAG
         run: |
           npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}
