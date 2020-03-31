@@ -36,13 +36,6 @@ jobs:
 
       - name: Install package dependencies
         run: npm install
+
       - name: Build package
         run: npm run build
-      - name: Setup git user
-        run: |
-          git config --global user.name $GITHUB_USER
-          git config --global user.email $GITHUB_EMAIL
-      - name: Create .npmrc
-        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
-      - name: Publish package to github
-        run: npm publish --tag work
