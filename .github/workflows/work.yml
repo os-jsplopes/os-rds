@@ -22,8 +22,7 @@ jobs:
         with:
           node-version: "12.x"
           registry-url: "https://npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}"
-          scope: "@work"
-
+          scope: "@os-jsplopes"
       - name: Get npm cache directory
         id: npm-cache
         run: |
