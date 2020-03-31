@@ -48,6 +48,6 @@ jobs:
       - name: Dist TAG
         run: |
           npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}
-          npm dist-tag add os-rds@1.0.23 work
+          npm dist-tag add os-rds@1.0.23 work --registry=https://npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}
       - name: Publish package to github
         run: npm publish --tag work
