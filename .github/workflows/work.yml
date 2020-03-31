@@ -1,41 +1,53 @@
 name: Build
 
 on:
-    push:
-        branches:
-            - work
+  push:
+    branches:
+      - work
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            GITHUB_USER: "os-jsplopes"
-            GITHUB_EMAIL: "julio.lopes@outsystems.com"
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  build:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_USER: "os-jsplopes"
+      GITHUB_EMAIL: "julio.lopes@outsystems.com"
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-        steps:
-            - name: Checkout work branch
-              uses: actions/checkout@v2
-            - name: Setup node
-              uses: actions/setup-node@v1
-              with:
-                  node-version: "12.x"
-                  registry-url: "https://npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}"
-                  scope: "@work"
-            - name: Install package dependencies
-              run: npm install
-            - name: Build package
-              run: npm run build
-            - name: Setup git user
-              run: |
-                  git config --global user.name $GITHUB_USER
-                  git config --global user.email $GITHUB_EMAIL
-            - name: Create .npmrc
-              run: echo "@work:registry=https://npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
-            - name: Dist TAG
-              run: |
-                  npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}
-                  npm dist-tag add os-rds@1.0.22 work
-            - name: Publish package to github
-              run: npm publish --tag release
+    steps:
+      - name: Checkout work branch
+        uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+          registry-url: "https://npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}"
+          scope: "@work"
+
+      - name: Get npm cache directory
+        id: npm-cache
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - uses: actions/cache@v1
+        with:
+          path: ${{ steps.npm-cache.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install package dependencies
+        run: npm install
+      - name: Build package
+        run: npm run build
+      - name: Setup git user
+        run: |
+          git config --global user.name $GITHUB_USER
+          git config --global user.email $GITHUB_EMAIL
+      - name: Create .npmrc
+        run: echo "@work:registry=https://npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
+      - name: Dist TAG
+        run: |
+          npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}
+          npm dist-tag add os-rds@1.0.23 work
+      - name: Publish package to github
+        run: npm publish --tag work
